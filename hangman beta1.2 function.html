@@ -1,0 +1,73 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Шибениця!</title>
+</head>
+<body>
+    <h1>Шибениця</h1>
+
+<script>
+ const pickWord = function () {
+      const words = [
+        "машина",
+        "мавпа",
+        "літак",
+        "блінчик"
+      ];
+
+      return words[Math.floor(Math.random() * words.length)];
+    };
+
+    const setupAnswerArray = function (word) {
+      const answerArray = [];
+      for (let i = 0; i < word.length; i++) {
+        answerArray[i] = "_";
+      }
+
+      return answerArray;
+    };
+
+    const showPlayerProgress = function (answerArray) {
+      alert(answerArray.join(" "));
+    };
+
+    const getGuess = function () {
+      return prompt("Відгадайте буку загаданого слова або натисність Скасувати для виходу з гри.").toLowerCase ();
+    };
+
+    const updateGameState = function (guess, word, answerArray) {
+      let appearances = 0;
+      for (let j = 0; j < word.length; j++) {
+        if (word[j] === guess) {
+          answerArray[j] = guess;
+          appearances++;
+        }
+      }
+
+      return appearances;
+    };
+
+    const showAnswerAndCongratulatePlayer = function (answerArray) {
+      showPlayerProgress(answerArray);
+      alert("Хороша робота! Відповідь була " + answerArray.join(""));
+    };
+
+    const word = pickWord();
+    const answerArray = setupAnswerArray(word);
+    let remainingLetters = word.length;
+
+    while (remainingLetters > 0) { showPlayerProgress(answerArray); const guess = getGuess();
+      if (guess === null) {
+        break;
+      } else if (guess.length !== 1) {
+        alert("Будь ласка ведіть одну букву.");
+      } else {
+        const correctGuesses = updateGameState(guess, word, answerArray);
+        remainingLetters -= correctGuesses;
+      }
+    }
+    showAnswerAndCongratulatePlayer(answerArray);
+    </script>
+</body>
+</html>
